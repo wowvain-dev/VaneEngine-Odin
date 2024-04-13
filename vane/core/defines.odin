@@ -1,6 +1,5 @@
 package core
 
-
 u_size      :: uint;
 u_ptr       :: uintptr;
 u_ptr_diff  :: int;

@@ -95,3 +95,11 @@ when LOG_DEBUG_ENABLED {
 } else {
     VDEBUG :: #force_inline proc (..any) {} 
 }
+
+when LOG_TRACE_ENABLED {
+    VTRACE :: #force_inline proc (message: string, args: ..any) {
+        log_output(.V_TRACE, message, ..args)
+    }
+} else {
+    VTRACE :: #force_inline proc (..any) {}
+}
