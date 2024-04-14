@@ -12,8 +12,10 @@ endif
 .SILENT:
 .PHONY: all vane testbed editor
 
-all: vane testbed editor
+debug: ODINFLAGS += -debug
+debug: all
 
+all: vane testbed editor
 
 vane:
 	echo "===== Building Vane ====="

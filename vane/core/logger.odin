@@ -30,17 +30,7 @@ when ODIN_DEBUG == false {
 
 // state_ptr :: ^logger_system_state;
 
-logging_initialize :: proc (
-    memory_requirement: ^u64, 
-    state: rawptr, 
-    config: rawptr) -> bool {
-    //     memory_requirement^ = size_of(logger_system_state);
-
-    //     if state == nil {
-    //         return true;
-    //     }
-
-    //     state_ptr := state;
+initialize_logging :: proc () -> bool {
 
 
     // TODO(wowvain): CREATE LOG FILE
