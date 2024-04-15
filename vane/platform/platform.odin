@@ -13,8 +13,8 @@ platform_startup :: proc(
     application_name: cstring, 
     x: i16, 
     y: i16, 
-    width: i16, 
-    height: i16
+    width: u16, 
+    height: u16
 ) -> bool {
     sdl2.Init(sdl2.INIT_VIDEO)
     

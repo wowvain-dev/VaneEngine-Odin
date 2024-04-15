@@ -26,14 +26,8 @@ when ODIN_DEBUG {
 when ODIN_DEBUG == false {
 }
 
-// logger_system_state :: struct {} 
-
-// state_ptr :: ^logger_system_state;
-
 initialize_logging :: proc () -> bool {
 
-
-    // TODO(wowvain): CREATE LOG FILE
     return true;
 }
 

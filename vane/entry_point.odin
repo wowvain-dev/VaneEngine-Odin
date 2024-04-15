@@ -1,3 +1,0 @@
-package vane
-
-import "./core"
