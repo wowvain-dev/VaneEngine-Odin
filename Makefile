@@ -28,16 +28,16 @@ vane:
 	$(ODIN) build vane/ -out:bin/vane$(SHARED_EXT) -build-mode:shared $(ODINFLAGS)
 	copy /Y external\\*.dll bin\\
 	copy /Y $(VULKAN_SDK)\\lib\\vulkan-1.lib bin\\
-	echo "===== Built Succesfully ====="
+	echo "===== Built Successfully ====="
 
 testbed:
 	echo "===== Building Testbed ====="
 	if not exist "bin\" mkdir bin
 	$(ODIN) build testbed/ -out:bin/testbed$(EXEC_EXT) $(ODINFLAGS)
-	echo "===== Built Succesfully ====="
+	echo "===== Built Successfully ====="
 
 editor:
 	echo "===== Building Testbed ====="
 	if not exist "bin\" mkdir bin
 	$(ODIN) build editor/ -out:bin/editor$(EXEC_EXT) $(ODINFLAGS)
-	echo "===== Built Succesfully ====="
+	echo "===== Built Successfully ====="

@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7c928efc-6d36-4478-8679-9f471ac13bbb" name="Changes" comment="" />
+    <list default="true" id="7c928efc-6d36-4478-8679-9f471ac13bbb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ols.json" beforeDir="false" afterPath="$PROJECT_DIR$/ols.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build-all.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testbed/game.odin" beforeDir="false" afterPath="$PROJECT_DIR$/testbed/game.odin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testbed/main.odin" beforeDir="false" afterPath="$PROJECT_DIR$/testbed/main.odin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vane/core/application.odin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vane/core/asserts.odin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vane/core/defines.odin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vane/core/logger.odin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vane/entry.odin" beforeDir="false" afterPath="$PROJECT_DIR$/vane/entry.odin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vane/platform/platform.odin" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,24 +32,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;I:/source/vaneengine_odin&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "I:/sources/CleenRN",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-20.0.2-azul-20.0.2-4caba194b151-eb49e076" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -49,6 +64,8 @@
       <updated>1712588301250</updated>
       <workItem from="1712588311627" duration="60000" />
       <workItem from="1712588380098" duration="81000" />
+      <workItem from="1713189117863" duration="32000" />
+      <workItem from="1713205600197" duration="79000" />
     </task>
     <servers />
   </component>
