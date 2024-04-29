@@ -1,5 +1,7 @@
 package vane
 
+import mem "core:mem"
+
 MAX_MESSAGE_CODES :: 16384
 
 @(private = "file")
@@ -28,8 +30,27 @@ event_context :: struct {
 
 fn_on_event :: proc(code: u16, sender: rawptr, listener_inst: rawptr, data: event_context) -> bool
 
-initialize_event :: proc() -> bool {return false}
-shutdown_event :: proc() {}
+event_initialize :: proc() -> bool {
+	if initialized == true {
+		return false
+	}
+
+	initialized = false
+	mem.zero(&state, size_of(state))
+	initialized = true
+
+	return true
+}
+
+event_shutdown :: proc() {
+	for i in 1 ..< MAX_MESSAGE_CODES {
+		if state.registered[i].events != nil {
+			mem.delete_dynamic_array(state.registered[i].events)
+			state.registered[i].events = nil
+		}
+	}
+}
+
 
 registered_event :: struct {
 	listener: rawptr,
@@ -37,7 +58,7 @@ registered_event :: struct {
 }
 
 event_code_entry :: struct {
-	events: [^]registered_event,
+	events: [dynamic]registered_event,
 }
 
 event_system_state :: struct {
@@ -56,14 +77,58 @@ event_system_state :: struct {
   -- return: true if the event is successfully registered; false otherwise
 */
 event_register :: proc(code: u16, listener: rawptr, on_event: fn_on_event) -> bool {
-	return false
+	if initialized == false {
+		return false
+	}
+
+	if state.registered[code].events == nil {
+		state.registered[code].events = make([dynamic]registered_event)
+	}
+
+	registered_count := len(state.registered[code].events)
+
+	for i in 0 ..< registered_count {
+		if state.registered[code].events[i].listener == listener {
+			// TODO: warn
+			return false
+		}
+	}
+
+	// If no duplicate, proceed
+	event: registered_event
+	event.listener = listener
+	event.callback = on_event
+
+	append(&state.registered[code].events, event)
+
+	return true
 }
 
 event_unregister :: proc(code: u16, listener: rawptr, on_event: fn_on_event) -> bool {
+	if initialized == false {
+		return false
+	}
+
+	if state.registered[code].events == nil {
+		return false
+	}
+
+	registered_count := len(state.registered[code].events)
+	for i in 0 ..< registered_count {
+		e := state.registered[code].events[i]
+		if e.listener == listener && e.callback == on_event {
+			popped_event := state.registered[code].events[i]
+			unordered_remove(&state.registered[code].events, i)
+			return true
+		}
+	}
+
+	// not found
 	return false
 }
 
 event_fire :: proc(code: u16, sender: rawptr, ctx: event_context) -> bool {
+	// TODO: implement
 	return false
 }
 
@@ -103,4 +168,3 @@ system_event_code :: enum {
 	EVENT_CODE_RESIZED          = 0x08,
 	MAX_EVENT_CODE              = 0xFF,
 }
-
