@@ -6,7 +6,7 @@ MAX_MESSAGE_CODES :: 16384
 
 @(private = "file")
 initialized := false
-
+@(private = "file")
 state: event_system_state
 
 event_data :: struct #raw_union {

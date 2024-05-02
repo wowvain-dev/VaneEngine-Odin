@@ -2,14 +2,14 @@
 package main
 
 import "core:fmt"
-import "core:mem"
-import "core:os"
-import "core:thread"
-import "core:time"
-import "core:reflect"
-import "core:runtime"
 import "core:intrinsics"
 import "core:math/big"
+import "core:mem"
+import "core:os"
+import "core:reflect"
+import "core:runtime"
+import "core:thread"
+import "core:time"
 
 /*
 	Odin is a general-purpose programming language with distinct typing built
@@ -43,7 +43,7 @@ import "core:math/big"
 the_basics :: proc() {
 	fmt.println("\n# the basics")
 
-	{ // The Basics
+	{ 	// The Basics
 
 		// os.args holds the path to the current executable and any arguments passed to it.
 		if len(os.args) == 1 {
@@ -100,13 +100,13 @@ the_basics :: proc() {
 		// Constant literals are “untyped” which means that they can implicitly convert to a type.
 
 		y: int // `y` is typed of type `int`
-		y = 1  // `1` is an untyped integer literal which can implicitly convert to `int`
+		y = 1 // `1` is an untyped integer literal which can implicitly convert to `int`
 
 		z: f64 // `z` is typed of type `f64` (64-bit floating point number)
-		z = 1  // `1` is an untyped integer literal which can be implicitly converted to `f64`
-				// No need for any suffixes or decimal places like in other languages
-				// (with the exception of negative zero, which must be given as `-0.0`)
-				// CONSTANTS JUST WORK!!!
+		z = 1 // `1` is an untyped integer literal which can be implicitly converted to `f64`
+		// No need for any suffixes or decimal places like in other languages
+		// (with the exception of negative zero, which must be given as `-0.0`)
+		// CONSTANTS JUST WORK!!!
 
 
 		// Assignment statements
@@ -133,7 +133,7 @@ the_basics :: proc() {
 		X :: "what" // constant `X` has the untyped string value "what"
 
 		// Constants can be explicitly typed like a variable declaration:
-		Y : int : 123
+		Y: int : 123
 		Z :: Y + 7 // constant computations are possible
 
 		_ = my_integer_variable
@@ -143,7 +143,7 @@ the_basics :: proc() {
 
 control_flow :: proc() {
 	fmt.println("\n# control flow")
-	{ // Control flow
+	{ 	// Control flow
 		// For loop
 		// Odin has only one loop statement, the `for` loop
 
@@ -154,12 +154,12 @@ control_flow :: proc() {
 
 		// NOTE: Unlike other languages like C, there are no parentheses `( )` surrounding the three components.
 		// Braces `{ }` or a `do` are always required
-		for i := 0; i < 10; i += 1 { }
+		for i := 0; i < 10; i += 1 {}
 		// for i := 0; i < 10; i += 1 do fmt.print()
 
 		// The initial and post statements are optional
 		i := 0
-		for ; i < 10; {
+		for i < 10 {
 			i += 1
 		}
 
@@ -180,16 +180,16 @@ control_flow :: proc() {
 			fmt.println(j)
 		}
 		// can also be written
-		for j in 0..<10 {
+		for j in 0 ..< 10 {
 			fmt.println(j)
 		}
-		for j in 0..=9 {
+		for j in 0 ..= 9 {
 			fmt.println(j)
 		}
 
 		// Certain built-in types can be iterated over
 		some_string := "Hello, 世界"
-		for character in some_string { // Strings are assumed to be UTF-8
+		for character in some_string { 	// Strings are assumed to be UTF-8
 			fmt.println(character)
 		}
 
@@ -210,7 +210,11 @@ control_flow :: proc() {
 		}
 
 
-		some_map := map[string]int{"A" = 1, "C" = 9, "B" = 4}
+		some_map := map[string]int {
+			"A" = 1,
+			"C" = 9,
+			"B" = 4,
+		}
 		defer delete(some_map)
 		for key in some_map {
 			fmt.println(key)
@@ -236,7 +240,7 @@ control_flow :: proc() {
 		// The iterated values are copies and cannot be written to.
 		// The following idiom is useful for iterating over a container in a by-reference manner:
 		for _, idx in some_slice {
-			some_slice[idx] = (idx+1)*(idx+1)
+			some_slice[idx] = (idx + 1) * (idx + 1)
 		}
 
 
@@ -267,7 +271,8 @@ control_flow :: proc() {
 			fmt.println("32-bit")
 		case .amd64:
 			fmt.println("64-bit")
-		case: // default
+		case:
+			// default
 			fmt.println("Unsupported architecture")
 		}
 
@@ -301,23 +306,23 @@ control_flow :: proc() {
 
 		// A `switch` statement can also use ranges like a range-based loop:
 		switch c := 'j'; c {
-		case 'A'..='Z', 'a'..='z', '0'..='9':
+		case 'A' ..= 'Z', 'a' ..= 'z', '0' ..= '9':
 			fmt.println("c is alphanumeric")
 		}
 
 		switch x {
-		case 0..<10:
+		case 0 ..< 10:
 			fmt.println("units")
-		case 10..<13:
+		case 10 ..< 13:
 			fmt.println("pre-teens")
-		case 13..<20:
+		case 13 ..< 20:
 			fmt.println("teens")
-		case 20..<30:
+		case 20 ..< 30:
 			fmt.println("twenties")
 		}
 	}
 
-	{ // Defer statement
+	{ 	// Defer statement
 		// A defer statement defers the execution of a statement until the end of
 		// the scope it is in.
 
@@ -367,7 +372,7 @@ control_flow :: proc() {
 		}
 	}
 
-	{ // When statement
+	{ 	// When statement
 		/*
 			The when statement is almost identical to the if statement but with some differences:
 
@@ -393,10 +398,10 @@ control_flow :: proc() {
 		// it is type checked.
 	}
 
-	{ // Branch statements
+	{ 	// Branch statements
 		cond, cond1, cond2 := false, false, false
-		one_step :: proc() { fmt.println("one_step") }
-		beyond :: proc() { fmt.println("beyond") }
+		one_step :: proc() {fmt.println("one_step")}
+		beyond :: proc() {fmt.println("beyond")}
 
 		// Break statement
 		for cond {
@@ -467,7 +472,7 @@ named_proc_return_parameters :: proc() {
 
 variadic_procedures :: proc() {
 	fmt.println("\n# variadic procedures")
-	sum :: proc(nums: ..int, init_value:= 0) -> (result: int) {
+	sum :: proc(nums: ..int, init_value := 0) -> (result: int) {
 		result = init_value
 		for n in nums {
 			result += n
@@ -506,15 +511,19 @@ explicit_procedure_overloading :: proc() {
 		return x
 	}
 
-	add :: proc{add_ints, add_floats, add_numbers}
+	add :: proc {
+		add_ints,
+		add_floats,
+		add_numbers,
+	}
 
 	add(int(1), int(2))
 	add(f32(1), f32(2))
 	add(int(1), f32(2), u8(3))
 
-	add(1, 2)     // untyped ints coerce to int tighter than f32
+	add(1, 2) // untyped ints coerce to int tighter than f32
 	add(1.0, 2.0) // untyped floats coerce to f32 tighter than int
-	add(1, 2, 3)  // three parameters
+	add(1, 2, 3) // three parameters
 
 	// Ambiguous answers
 	// add(1.0, 2)
@@ -558,7 +567,10 @@ struct_type :: proc() {
 
 		// You can list just a subset of the fields if you specify the
 		// field by name (the order of the named fields does not matter):
-		v = Vector3{z=1, y=2}
+		v = Vector3 {
+			z = 1,
+			y = 2,
+		}
 		assert(v.x == 0)
 		assert(v.y == 2)
 		assert(v.z == 1)
@@ -566,8 +578,8 @@ struct_type :: proc() {
 	{
 		// Structs can tagged with different memory layout and alignment requirements:
 
-		a :: struct #align(4)  {} // align to 4 bytes
-		b :: struct #packed    {} // remove padding between fields
+		a :: struct #align (4) {} // align to 4 bytes
+		b :: struct #packed {} // remove padding between fields
 		c :: struct #raw_union {} // all fields share the same offset (0). This is the same as C's union
 	}
 
@@ -577,7 +589,10 @@ struct_type :: proc() {
 union_type :: proc() {
 	fmt.println("\n# union type")
 	{
-		val: union{int, bool}
+		val: union {
+			int,
+			bool,
+		}
 		val = 137
 		if i, ok := val.(int); ok {
 			fmt.println(i)
@@ -588,9 +603,12 @@ union_type :: proc() {
 		val = nil
 
 		switch v in val {
-		case int:  fmt.println("int",  v)
-		case bool: fmt.println("bool", v)
-		case:      fmt.println("nil")
+		case int:
+			fmt.println("int", v)
+		case bool:
+			fmt.println("bool", v)
+		case:
+			fmt.println("nil")
 		}
 	}
 	{
@@ -609,9 +627,12 @@ union_type :: proc() {
 		val = nil
 
 		switch v in val {
-		case int:  fmt.println("int",  v)
-		case bool: fmt.println("bool", v)
-		case:      fmt.println("nil")
+		case int:
+			fmt.println("int", v)
+		case bool:
+			fmt.println("bool", v)
+		case:
+			fmt.println("nil")
 		}
 	}
 
@@ -631,8 +652,7 @@ union_type :: proc() {
 			name:        string,
 			position:    Vector3,
 			orientation: Quaternion,
-
-			derived: any,
+			derived:     any,
 		}
 
 		Frog :: struct {
@@ -659,8 +679,8 @@ union_type :: proc() {
 		case Frog:
 			fmt.println("Ribbit")
 		case Monster:
-			if e.is_robot  { fmt.println("Robotic") }
-			if e.is_zombie { fmt.println("Grrrr!")  }
+			if e.is_robot {fmt.println("Robotic")}
+			if e.is_zombie {fmt.println("Grrrr!")}
 			fmt.println("I'm a monster")
 		}
 	}
@@ -676,8 +696,10 @@ union_type :: proc() {
 			name:        string,
 			position:    Vector3,
 			orientation: Quaternion,
-
-			derived: union {Frog, Monster},
+			derived:     union {
+				Frog,
+				Monster,
+			},
 		}
 
 		Frog :: struct {
@@ -694,7 +716,9 @@ union_type :: proc() {
 		// See `parametric_polymorphism` procedure for details
 		new_entity :: proc($T: typeid) -> ^Entity {
 			t := new(Entity)
-			t.derived = T{entity = t}
+			t.derived = T {
+				entity = t,
+			}
 			return t
 		}
 
@@ -704,8 +728,8 @@ union_type :: proc() {
 		case Frog:
 			fmt.println("Ribbit")
 		case Monster:
-			if e.is_robot  { fmt.println("Robotic") }
-			if e.is_zombie { fmt.println("Grrrr!")  }
+			if e.is_robot {fmt.println("Robotic")}
+			if e.is_zombie {fmt.println("Grrrr!")}
 		}
 
 		// NOTE(bill): As you can see, the usage code has not changed, only its
@@ -754,10 +778,12 @@ using_statement :: proc() {
 	// into the current scope. This can be applied to import names, struct
 	// fields, procedure fields, and struct values.
 
-	Vector3 :: struct{x, y, z: f32}
+	Vector3 :: struct {
+		x, y, z: f32,
+	}
 	{
 		Entity :: struct {
-			position: Vector3,
+			position:    Vector3,
 			orientation: quaternion128,
 		}
 
@@ -788,7 +814,7 @@ using_statement :: proc() {
 		// making all the fields of position appear as if they on Entity itself:
 		Entity :: struct {
 			using position: Vector3,
-			orientation: quaternion128,
+			orientation:    quaternion128,
 		}
 		foo :: proc(entity: ^Entity) {
 			fmt.println(entity.x, entity.y, entity.z)
@@ -800,11 +826,13 @@ using_statement :: proc() {
 		// functionality in C++, but without the requirement of vtables or unknown
 		// struct layout:
 
-		Colour :: struct {r, g, b, a: u8}
+		Colour :: struct {
+			r, g, b, a: u8,
+		}
 		Frog :: struct {
 			ribbit_volume: f32,
-			using entity: Entity,
-			colour: Colour,
+			using entity:  Entity,
+			colour:        Colour,
 		}
 
 		frog: Frog
@@ -881,9 +909,9 @@ parametric_polymorphism :: proc() {
 		fmt.printf("print_value: %T %v\n", value, value)
 	}
 
-	v1: int    = 1
-	v2: f32    = 2.1
-	v3: f64    = 3.14
+	v1: int = 1
+	v2: f32 = 2.1
+	v3: f64 = 3.14
 	v4: string = "message"
 
 	print_value(v1)
@@ -914,7 +942,7 @@ parametric_polymorphism :: proc() {
 	copy_slice :: proc(dst, src: []$T) -> int {
 		n := min(len(dst), len(src))
 		if n > 0 {
-			mem.copy(&dst[0], &src[0], n*size_of(T))
+			mem.copy(&dst[0], &src[0], n * size_of(T))
 		}
 		return n
 	}
@@ -926,8 +954,7 @@ parametric_polymorphism :: proc() {
 	fmt.println(double_params(12, 1.345))
 
 
-
-	{ // Polymorphic Types and Type Specialization
+	{ 	// Polymorphic Types and Type Specialization
 		Table_Slot :: struct($Key, $Value: typeid) {
 			occupied: bool,
 			hash:     u32,
@@ -967,7 +994,7 @@ parametric_polymorphism :: proc() {
 			old_slots := table.slots
 			defer delete(old_slots)
 
-			cap := max(2*len(table.slots), TABLE_SIZE_MIN)
+			cap := max(2 * len(table.slots), TABLE_SIZE_MIN)
 			allocate(table, cap)
 
 			for s in old_slots {
@@ -983,7 +1010,7 @@ parametric_polymorphism :: proc() {
 			hash := get_hash(key) // Ad-hoc method which would fail in a different scope
 			index := find_index(table, key, hash)
 			if index < 0 {
-				if f64(table.count) >= 0.75*f64(len(table.slots)) {
+				if f64(table.count) >= 0.75 * f64(len(table.slots)) {
 					expand(table)
 				}
 				assert(table.count <= len(table.slots))
@@ -1001,9 +1028,9 @@ parametric_polymorphism :: proc() {
 
 			slot := &table.slots[index]
 			slot.occupied = true
-			slot.hash     = hash
-			slot.key      = key
-			slot.value    = value
+			slot.hash = hash
+			slot.key = key
+			slot.value = value
 		}
 
 
@@ -1038,9 +1065,9 @@ parametric_polymorphism :: proc() {
 			return -1
 		}
 
-		get_hash :: proc(s: string) -> u32 { // fnv32a
+		get_hash :: proc(s: string) -> u32 { 	// fnv32a
 			h: u32 = 0x811c9dc5
-			for i in 0..<len(s) {
+			for i in 0 ..< len(s) {
 				h = (h ~ u32(s[i])) * 0x01000193
 			}
 			return h
@@ -1049,8 +1076,8 @@ parametric_polymorphism :: proc() {
 
 		table: Table(string, int)
 
-		for i in 0..=36 { put(&table, "Hellope", i) }
-		for i in 0..=42 { put(&table, "World!",  i) }
+		for i in 0 ..= 36 {put(&table, "Hellope", i)}
+		for i in 0 ..= 42 {put(&table, "World!", i)}
 
 		found, _ := find(&table, "Hellope")
 		fmt.printf("`found` is %v\n", found)
@@ -1065,14 +1092,17 @@ parametric_polymorphism :: proc() {
 		// the hashing procedure with the table
 	}
 
-	{ // Parametric polymorphic union
+	{ 	// Parametric polymorphic union
 		Error :: enum {
 			Foo0,
 			Foo1,
 			Foo2,
 			Foo3,
 		}
-		Para_Union :: union($T: typeid) {T, Error}
+		Para_Union :: union($T: typeid) {
+			T,
+			Error,
+		}
 		r: Para_Union(int)
 		fmt.println(typeid_of(type_of(r)))
 
@@ -1083,15 +1113,19 @@ parametric_polymorphism :: proc() {
 		fmt.println(r)
 	}
 
-	{ // Polymorphic names
+	{ 	// Polymorphic names
 		foo :: proc($N: $I, $T: typeid) -> (res: [N]T) {
 			// `N` is the constant value passed
 			// `I` is the type of N
 			// `T` is the type passed
-			fmt.printf("Generating an array of type %v from the value %v of type %v\n",
-					   typeid_of(type_of(res)), N, typeid_of(I))
-			for i in 0..<N {
-				res[i] = T(i*i)
+			fmt.printf(
+				"Generating an array of type %v from the value %v of type %v\n",
+				typeid_of(type_of(res)),
+				N,
+				typeid_of(I),
+			)
+			for i in 0 ..< N {
+				res[i] = T(i * i)
 			}
 			return
 		}
@@ -1099,14 +1133,14 @@ parametric_polymorphism :: proc() {
 		T :: int
 		array := foo(4, T)
 		for v, i in array {
-			assert(v == T(i*i))
+			assert(v == T(i * i))
 		}
 
 		// Matrix multiplication
 		mul :: proc(a: [$M][$N]$T, b: [N][$P]T) -> (c: [M][P]T) {
-			for i in 0..<M {
-				for j in 0..<P {
-					for k in 0..<N {
+			for i in 0 ..< M {
+				for j in 0 ..< P {
+					for k in 0 ..< N {
 						c[i][j] += a[i][k] * b[k][j]
 					}
 				}
@@ -1114,29 +1148,15 @@ parametric_polymorphism :: proc() {
 			return
 		}
 
-		x := [2][3]f32{
-			{1, 2, 3},
-			{3, 2, 1},
-		}
-		y := [3][2]f32{
-			{0, 8},
-			{6, 2},
-			{8, 4},
-		}
+		x := [2][3]f32{{1, 2, 3}, {3, 2, 1}}
+		y := [3][2]f32{{0, 8}, {6, 2}, {8, 4}}
 		z := mul(x, y)
 		assert(z == {{36, 24}, {20, 32}})
 	}
 }
 
 
-prefix_table := [?]string{
-	"White",
-	"Red",
-	"Green",
-	"Blue",
-	"Octarine",
-	"Black",
-}
+prefix_table := [?]string{"White", "Red", "Green", "Blue", "Octarine", "Black"}
 
 print_mutex := b64(false)
 
@@ -1148,10 +1168,10 @@ threading_example :: proc() {
 		return ok && res == false
 	}
 
-	{ // Basic Threads
+	{ 	// Basic Threads
 		fmt.println("\n## Basic Threads")
 		worker_proc :: proc(t: ^thread.Thread) {
-			for iteration in 1..=5 {
+			for iteration in 1 ..= 5 {
 				fmt.printf("Thread %d is on iteration %d\n", t.user_index, iteration)
 				fmt.printf("`%s`: iteration %d\n", prefix_table[t.user_index], iteration)
 				time.sleep(1 * time.Millisecond)
@@ -1171,7 +1191,7 @@ threading_example :: proc() {
 		}
 
 		for len(threads) > 0 {
-			for i := 0; i < len(threads); /**/ {
+			for i := 0; i < len(threads);  /**/{
 				if t := threads[i]; thread.is_done(t) {
 					fmt.printf("Thread %d is done\n", t.user_index)
 					thread.destroy(t)
@@ -1184,12 +1204,12 @@ threading_example :: proc() {
 		}
 	}
 
-	{ // Thread Pool
+	{ 	// Thread Pool
 		fmt.println("\n## Thread Pool")
 		task_proc :: proc(t: thread.Task) {
 			index := t.user_index % len(prefix_table)
-			for iteration in 1..=5 {
-				for !did_acquire(&print_mutex) { thread.yield() } // Allow one thread to print at a time.
+			for iteration in 1 ..= 5 {
+				for !did_acquire(&print_mutex) {thread.yield()} 	// Allow one thread to print at a time.
 
 				fmt.printf("Worker Task %d is on iteration %d\n", t.user_index, iteration)
 				fmt.printf("`%s`: iteration %d\n", prefix_table[index], iteration)
@@ -1203,13 +1223,19 @@ threading_example :: proc() {
 		N :: 3
 
 		pool: thread.Pool
-		thread.pool_init(&pool, allocator=context.allocator, thread_count=N)
+		thread.pool_init(&pool, allocator = context.allocator, thread_count = N)
 		defer thread.pool_destroy(&pool)
 
 
-		for i in 0..<30 {
+		for i in 0 ..< 30 {
 			// be mindful of the allocator used for tasks. The allocator needs to be thread safe, or be owned by the task for exclusive use 
-			thread.pool_add_task(&pool, allocator=context.allocator, procedure=task_proc, data=nil, user_index=i)
+			thread.pool_add_task(
+				&pool,
+				allocator = context.allocator,
+				procedure = task_proc,
+				data = nil,
+				user_index = i,
+			)
 		}
 
 		thread.pool_start(&pool)
@@ -1219,7 +1245,7 @@ threading_example :: proc() {
 			time.sleep(5 * time.Millisecond)
 
 			// Allow one thread to print at a time.
-			for !did_acquire(&print_mutex) { thread.yield() }
+			for !did_acquire(&print_mutex) {thread.yield()}
 
 			thread.terminate(pool.threads[N - 1], 0)
 			fmt.println("Canceled last thread")
@@ -1238,7 +1264,7 @@ array_programming :: proc() {
 		b := [3]f32{5, 6, 7}
 		c := a * b
 		d := a + b
-		e := 1 +  (c - d) / 2
+		e := 1 + (c - d) / 2
 		fmt.printf("%.1f\n", e) // [0.5, 3.0, 6.5]
 	}
 
@@ -1256,7 +1282,7 @@ array_programming :: proc() {
 		Vector3 :: distinct [3]f32
 		a := Vector3{1, 2, 3}
 		b := Vector3{5, 6, 7}
-		c := (a * b)/2 + 1
+		c := (a * b) / 2 + 1
 		d := c.x + c.y + c.z
 		fmt.printf("%.1f\n", d) // 22.0
 
@@ -1306,7 +1332,11 @@ map_type :: proc() {
 implicit_selector_expression :: proc() {
 	fmt.println("\n# implicit selector expression")
 
-	Foo :: enum {A, B, C}
+	Foo :: enum {
+		A,
+		B,
+		C,
+	}
 
 	f: Foo
 	f = Foo.A
@@ -1335,7 +1365,7 @@ implicit_selector_expression :: proc() {
 
 partial_switch :: proc() {
 	fmt.println("\n# partial_switch")
-	{ // enum
+	{ 	// enum
 		Foo :: enum {
 			A,
 			B,
@@ -1345,29 +1375,42 @@ partial_switch :: proc() {
 
 		f := Foo.A
 		switch f {
-		case .A: fmt.println("A")
-		case .B: fmt.println("B")
-		case .C: fmt.println("C")
-		case .D: fmt.println("D")
-		case:    fmt.println("?")
+		case .A:
+			fmt.println("A")
+		case .B:
+			fmt.println("B")
+		case .C:
+			fmt.println("C")
+		case .D:
+			fmt.println("D")
+		case:
+			fmt.println("?")
 		}
 
 		#partial switch f {
-		case .A: fmt.println("A")
-		case .D: fmt.println("D")
+		case .A:
+			fmt.println("A")
+		case .D:
+			fmt.println("D")
 		}
 	}
-	{ // union
-		Foo :: union {int, bool}
+	{ 	// union
+		Foo :: union {
+			int,
+			bool,
+		}
 		f: Foo = 123
 		switch _ in f {
-		case int:  fmt.println("int")
-		case bool: fmt.println("bool")
+		case int:
+			fmt.println("int")
+		case bool:
+			fmt.println("bool")
 		case:
 		}
 
 		#partial switch _ in f {
-		case bool: fmt.println("bool")
+		case bool:
+			fmt.println("bool")
 		}
 	}
 }
@@ -1425,9 +1468,9 @@ bit_set_type :: proc() {
 		fmt.println("Cardinality:", card(e))
 	}
 	{
-		x: bit_set['A'..='Z']
+		x: bit_set['A' ..= 'Z']
 		#assert(size_of(x) == size_of(u32))
-		y: bit_set[0..=8; u16]
+		y: bit_set[0 ..= 8;u16]
 		fmt.println(typeid_of(type_of(x))) // bit_set[A..=Z]
 		fmt.println(typeid_of(type_of(y))) // bit_set[0..=8; u16]
 
@@ -1440,15 +1483,15 @@ bit_set_type :: proc() {
 		assert(2 in y)
 	}
 	{
-		Letters :: bit_set['A'..='Z']
+		Letters :: bit_set['A' ..= 'Z']
 		a := Letters{'A', 'B'}
 		b := Letters{'A', 'B', 'C', 'D', 'F'}
 		c := Letters{'A', 'B'}
 
 		assert(a <= b) // 'a' is a subset of 'b'
 		assert(b >= a) // 'b' is a superset of 'a'
-		assert(a < b)  // 'a' is a strict subset of 'b'
-		assert(b > a)  // 'b' is a strict superset of 'a'
+		assert(a < b) // 'a' is a strict subset of 'b'
+		assert(b > a) // 'b' is a strict superset of 'a'
 
 		assert(!(a < c)) // 'a' is a not strict subset of 'c'
 		assert(!(c > a)) // 'c' is a not strict superset of 'a'
@@ -1458,7 +1501,7 @@ bit_set_type :: proc() {
 deferred_procedure_associations :: proc() {
 	fmt.println("\n# deferred procedure associations")
 
-	@(deferred_out=closure)
+	@(deferred_out = closure)
 	open :: proc(s: string) -> bool {
 		fmt.println(s)
 		return true
@@ -1477,7 +1520,7 @@ reflection :: proc() {
 	fmt.println("\n# reflection")
 
 	Foo :: struct {
-		x: int    `tag1`,
+		x: int `tag1`,
 		y: string `json:"y_field"`,
 		z: bool, // no tag
 	}
@@ -1485,7 +1528,7 @@ reflection :: proc() {
 	id := typeid_of(Foo)
 	names := reflect.struct_field_names(id)
 	types := reflect.struct_field_types(id)
-	tags  := reflect.struct_field_tags(id)
+	tags := reflect.struct_field_tags(id)
 
 	assert(len(names) == len(types) && len(names) == len(tags))
 
@@ -1512,9 +1555,9 @@ quaternions :: proc() {
 	// Not just an April Fool's Joke any more, but a fully working thing!
 	fmt.println("\n# quaternions")
 
-	{ // Quaternion operations
+	{ 	// Quaternion operations
 		q := 1 + 2i + 3j + 4k
-		r := quaternion(real=5, imag=6, jmag=7, kmag=8)
+		r := quaternion(real = 5, imag = 6, jmag = 7, kmag = 8)
 		t := q * r
 		fmt.printf("(%v) * (%v) = %v\n", q, r, t)
 		v := q / r
@@ -1524,15 +1567,15 @@ quaternions :: proc() {
 		s := q - r
 		fmt.printf("(%v) - (%v) = %v\n", q, r, s)
 	}
-	{ // The quaternion types
+	{ 	// The quaternion types
 		q128: quaternion128 // 4xf32
 		q256: quaternion256 // 4xf64
-		q128 = quaternion(w=1, x=0, y=0, z=0)
+		q128 = quaternion(w = 1, x = 0, y = 0, z = 0)
 		q256 = 1 // quaternion(x=0, y=0, z=0, w=1)
 
 		// NOTE: The internal memory layout of a quaternion is xyzw
 	}
-	{ // Built-in procedures
+	{ 	// Built-in procedures
 		q := 1 + 2i + 3j + 4k
 		fmt.println("q =", q)
 		fmt.println("real(q) =", real(q))
@@ -1542,13 +1585,13 @@ quaternions :: proc() {
 		fmt.println("conj(q) =", conj(q))
 		fmt.println("abs(q)  =", abs(q))
 	}
-	{ // Conversion of a complex type to a quaternion type
+	{ 	// Conversion of a complex type to a quaternion type
 		c := 1 + 2i
 		q := quaternion256(c)
 		fmt.println(c)
 		fmt.println(q)
 	}
-	{ // Memory layout of Quaternions
+	{ 	// Memory layout of Quaternions
 		q := 1 + 2i + 3j + 4k
 		a := transmute([4]f64)q
 		fmt.println("Quaternion memory layout: xyzw/(ijkr)")
@@ -1565,7 +1608,7 @@ unroll_for_statement :: proc() {
 	// be very very useful for certain optimizations
 
 	fmt.println("Ranges")
-	#unroll for x, i in 1..<4 {
+	#unroll for x, i in 1 ..< 4 {
 		fmt.println(x, i)
 	}
 
@@ -1595,23 +1638,20 @@ unroll_for_statement :: proc() {
 where_clauses :: proc() {
 	fmt.println("\n#procedure 'where' clauses")
 
-	{ // Sanity checks
-		simple_sanity_check :: proc(x: [2]int)
-			where len(x) > 1,
-				  type_of(x) == [2]int {
+	{ 	// Sanity checks
+		simple_sanity_check :: proc(x: [2]int) where len(x) > 1,
+			type_of(x) == [2]int {
 			fmt.println(x)
 		}
 	}
-	{ // Parametric polymorphism checks
-		cross_2d :: proc(a, b: $T/[2]$E) -> E
-			where intrinsics.type_is_numeric(E) {
-			return a.x*b.y - a.y*b.x
+	{ 	// Parametric polymorphism checks
+		cross_2d :: proc(a, b: $T/[2]$E) -> E where intrinsics.type_is_numeric(E) {
+			return a.x * b.y - a.y * b.x
 		}
-		cross_3d :: proc(a, b: $T/[3]$E) -> T
-			where intrinsics.type_is_numeric(E) {
-			x := a.y*b.z - a.z*b.y
-			y := a.z*b.x - a.x*b.z
-			z := a.x*b.y - a.y*b.z
+		cross_3d :: proc(a, b: $T/[3]$E) -> T where intrinsics.type_is_numeric(E) {
+			x := a.y * b.z - a.z * b.y
+			y := a.z * b.x - a.x * b.z
+			z := a.x * b.y - a.y * b.z
 			return T{x, y, z}
 		}
 
@@ -1630,21 +1670,22 @@ where_clauses :: proc() {
 
 	}
 
-	{ // Procedure groups usage
-		foo :: proc(x: [$N]int) -> bool
-			where N > 2 {
+	{ 	// Procedure groups usage
+		foo :: proc(x: [$N]int) -> bool where N > 2 {
 			fmt.println(#procedure, "was called with the parameter", x)
 			return true
 		}
 
-		bar :: proc(x: [$N]int) -> bool
-			where 0 < N,
-				  N <= 2 {
+		bar :: proc(x: [$N]int) -> bool where 0 < N,
+			N <= 2 {
 			fmt.println(#procedure, "was called with the parameter", x)
 			return false
 		}
 
-		baz :: proc{foo, bar}
+		baz :: proc {
+			foo,
+			bar,
+		}
 
 		x := [3]int{1, 2, 3}
 		y := [2]int{4, 9}
@@ -1654,18 +1695,17 @@ where_clauses :: proc() {
 		assert(ok_y == false)
 	}
 
-	{ // Record types
-		Foo :: struct($T: typeid, $N: int)
-			where intrinsics.type_is_integer(T),
-				  N > 2 {
+	{ 	// Record types
+		Foo :: struct($T: typeid, $N: int) where intrinsics.type_is_integer(T),
+			N > 2 {
 			x: [N]T,
-			y: [N-2]T,
+			y: [N - 2]T,
 		}
 
 		T :: i32
 		N :: 5
 		f: Foo(T, N)
-		#assert(size_of(f) == (N+N-2)*size_of(T))
+		#assert(size_of(f) == (N + N - 2) * size_of(T))
 	}
 }
 
@@ -1701,7 +1741,8 @@ foreign_system :: proc() {
 
 		@(default_calling_convention = "std")
 		foreign kernel32 {
-			@(link_name="GetLastError") get_last_error :: proc() -> i32 ---
+			@(link_name = "GetLastError")
+			get_last_error :: proc() -> i32 ---
 		}
 
 		// Example using the link_prefix attribute
@@ -1715,12 +1756,12 @@ foreign_system :: proc() {
 
 ranged_fields_for_array_compound_literals :: proc() {
 	fmt.println("\n#ranged fields for array compound literals")
-	{ // Normal Array Literal
+	{ 	// Normal Array Literal
 		foo := [?]int{1, 4, 9, 16}
 		fmt.println(foo)
 	}
-	{ // Indexed
-		foo := [?]int{
+	{ 	// Indexed
+		foo := [?]int {
 			3 = 16,
 			1 = 4,
 			2 = 9,
@@ -1728,30 +1769,30 @@ ranged_fields_for_array_compound_literals :: proc() {
 		}
 		fmt.println(foo)
 	}
-	{ // Ranges
+	{ 	// Ranges
 		i := 2
 		foo := [?]int {
 			0 = 123,
-			5..=9 = 54,
-			10..<16 = i*3 + (i-1)*2,
+			5 ..= 9  = 54,
+			10 ..< 16  = i * 3 + (i - 1) * 2,
 		}
 		#assert(len(foo) == 16)
 		fmt.println(foo) // [123, 0, 0, 0, 0, 54, 54, 54, 54, 54, 8, 8, 8, 8, 8]
 	}
-	{ // Slice and Dynamic Array support
+	{ 	// Slice and Dynamic Array support
 		i := 2
 		foo_slice := []int {
 			0 = 123,
-			5..=9 = 54,
-			10..<16 = i*3 + (i-1)*2,
+			5 ..= 9  = 54,
+			10 ..< 16  = i * 3 + (i - 1) * 2,
 		}
 		assert(len(foo_slice) == 16)
 		fmt.println(foo_slice) // [123, 0, 0, 0, 0, 54, 54, 54, 54, 54, 8, 8, 8, 8, 8]
 
 		foo_dynamic_array := [dynamic]int {
 			0 = 123,
-			5..=9 = 54,
-			10..<16 = i*3 + (i-1)*2,
+			5 ..= 9  = 54,
+			10 ..< 16  = i * 3 + (i - 1) * 2,
 		}
 		assert(len(foo_dynamic_array) == 16)
 		fmt.println(foo_dynamic_array) // [123, 0, 0, 0, 0, 54, 54, 54, 54, 54, 8, 8, 8, 8, 8]
@@ -1759,7 +1800,7 @@ ranged_fields_for_array_compound_literals :: proc() {
 }
 
 deprecated_attribute :: proc() {
-	@(deprecated="Use foo_v2 instead")
+	@(deprecated = "Use foo_v2 instead")
 	foo_v1 :: proc(x: int) {
 		fmt.println("foo_v1")
 	}
@@ -1791,10 +1832,10 @@ range_statements_with_multiple_return_values :: proc() {
 
 	data := make([]i32, 6)
 	for _, i in data {
-		data[i] = i32(i*i)
+		data[i] = i32(i * i)
 	}
 
-	{ // Manual Style
+	{ 	// Manual Style
 		it := make_my_iterator(data)
 		for {
 			val, _, cond := my_iterator(&it)
@@ -1804,20 +1845,20 @@ range_statements_with_multiple_return_values :: proc() {
 			fmt.println(val)
 		}
 	}
-	{ // or_break
+	{ 	// or_break
 		it := make_my_iterator(data)
 		loop: for {
 			val, _ := my_iterator(&it) or_break loop
 			fmt.println(val)
 		}
 	}
-	{ // first value
+	{ 	// first value
 		it := make_my_iterator(data)
 		for val in my_iterator(&it) {
 			fmt.println(val)
 		}
 	}
-	{ // first and second value
+	{ 	// first and second value
 		it := make_my_iterator(data)
 		for val, idx in my_iterator(&it) {
 			fmt.println(val, idx)
@@ -1830,7 +1871,9 @@ soa_struct_layout :: proc() {
 	fmt.println("\n#SOA Struct Layout")
 
 	{
-		Vector3 :: struct {x, y, z: f32}
+		Vector3 :: struct {
+			x, y, z: f32,
+		}
 
 		N :: 2
 		v_aos: [N]Vector3
@@ -1897,7 +1940,11 @@ soa_struct_layout :: proc() {
 	{
 		// SOA Slices
 		// Vector3 :: struct {x, y, z: f32}
-		Vector3 :: struct {x: i8, y: i16, z: f32}
+		Vector3 :: struct {
+			x: i8,
+			y: i16,
+			z: f32,
+		}
 
 		N :: 3
 		v: #soa[N]Vector3
@@ -1923,7 +1970,7 @@ soa_struct_layout :: proc() {
 		fmt.println(cap(d))
 		fmt.println(d[:])
 	}
-	{ // soa_zip and soa_unzip
+	{ 	// soa_zip and soa_unzip
 		fmt.println("\nsoa_zip and soa_unzip")
 
 		x := []i32{1, 3, 9}
@@ -1931,7 +1978,7 @@ soa_struct_layout :: proc() {
 		z := []b32{true, false, true}
 
 		// produce an #soa slice the normal slices passed
-		s := soa_zip(a=x, b=y, c=z)
+		s := soa_zip(a = x, b = y, c = z)
 
 		// iterate over the #soa slice
 		for v, i in s {
@@ -1952,10 +1999,19 @@ soa_struct_layout :: proc() {
 constant_literal_expressions :: proc() {
 	fmt.println("\n#constant literal expressions")
 
-	Bar :: struct {x, y: f32}
-	Foo :: struct {a, b: int, using c: Bar}
+	Bar :: struct {
+		x, y: f32,
+	}
+	Foo :: struct {
+		a, b:    int,
+		using c: Bar,
+	}
 
-	FOO_CONST :: Foo{b = 2, a = 1, c = {3, 4}}
+	FOO_CONST :: Foo {
+		b = 2,
+		a = 1,
+		c = {3, 4},
+	}
 
 
 	fmt.println(FOO_CONST.a)
@@ -1968,7 +2024,11 @@ constant_literal_expressions :: proc() {
 
 	fmt.println("-------")
 
-	ARRAY_CONST :: [3]int{1 = 4, 2 = 9, 0 = 1}
+	ARRAY_CONST :: [3]int {
+		1 = 4,
+		2 = 9,
+		0 = 1,
+	}
 
 	fmt.println(ARRAY_CONST[0])
 	fmt.println(ARRAY_CONST[1])
@@ -1981,8 +2041,16 @@ constant_literal_expressions :: proc() {
 
 	fmt.println("-------")
 
-	Baz :: enum{A=5, B, C, D}
-	ENUM_ARRAY_CONST :: [Baz]int{.A ..= .C = 1, .D = 16}
+	Baz :: enum {
+		A = 5,
+		B,
+		C,
+		D,
+	}
+	ENUM_ARRAY_CONST :: [Baz]int {
+		.A ..= .C   = 1,
+		.D = 16,
+	}
 
 	fmt.println(ENUM_ARRAY_CONST[.A])
 	fmt.println(ENUM_ARRAY_CONST[.B])
@@ -1991,9 +2059,17 @@ constant_literal_expressions :: proc() {
 
 	fmt.println("-------")
 
-	Sparse_Baz :: enum{A=5, B, C, D=16}
+	Sparse_Baz :: enum {
+		A = 5,
+		B,
+		C,
+		D = 16,
+	}
 	#assert(len(Sparse_Baz) < len(#sparse[Sparse_Baz]int))
-	SPARSE_ENUM_ARRAY_CONST :: #sparse[Sparse_Baz]int{.A ..= .C = 1, .D = 16}
+	SPARSE_ENUM_ARRAY_CONST :: #sparse[Sparse_Baz]int {
+		.A ..= .C   = 1,
+		.D = 16,
+	}
 
 	fmt.println(SPARSE_ENUM_ARRAY_CONST[.A])
 	fmt.println(SPARSE_ENUM_ARRAY_CONST[.B])
@@ -2017,7 +2093,9 @@ union_maybe :: proc() {
 	fmt.println("\n#union based maybe")
 
 	// NOTE: This is already built-in, and this is just a reimplementation to explain the behaviour
-	Maybe :: union($T: typeid) {T}
+	Maybe :: union($T: typeid) {
+		T,
+	}
 
 	i: Maybe(u8)
 	p: Maybe(^u8) // No tag is stored for pointers, nil is the sentinel value
@@ -2085,7 +2163,10 @@ or_else_operator :: proc() {
 	{
 		// 'or_else' can be used with type assertions too, as they
 		// have optional ok semantics
-		v: union{int, f64}
+		v: union {
+			int,
+			f64,
+		}
 		i: int
 		i = v.(int) or_else 123
 		i = v.? or_else 123 // Type inference magic
@@ -2182,7 +2263,7 @@ or_return_operator :: proc() {
 		}
 
 		defer if err != nil {
-			fmt.println("Error in", #procedure, ":" , err)
+			fmt.println("Error in", #procedure, ":", err)
 		}
 
 		n = 123
@@ -2221,34 +2302,34 @@ or_break_and_or_continue_operators :: proc() {
 		return 123, 345, .None
 	}
 
-	for { // common approach
+	for { 	// common approach
 		err := caller_1()
 		if err != nil {
 			break
 		}
 	}
-	for { // or_break approach
+	for { 	// or_break approach
 		caller_1() or_break
 	}
 
-	for { // or_break approach with multiple values
+	for { 	// or_break approach with multiple values
 		n := caller_2() or_break
 		_ = n
 	}
 
-	loop: for { // or_break approach with named label
+	loop: for { 	// or_break approach with named label
 		n := caller_2() or_break loop
 		_ = n
 	}
 
-	for { // or_continue
+	for { 	// or_continue
 		x, y := caller_3() or_continue
 		_, _ = x, y
 
 		break
 	}
 
-	continue_loop: for { // or_continue with named label
+	continue_loop: for { 	// or_continue with named label
 		x, y := caller_3() or_continue continue_loop
 		_, _ = x, y
 
@@ -2260,7 +2341,14 @@ or_break_and_or_continue_operators :: proc() {
 arbitrary_precision_mathematics :: proc() {
 	fmt.println("\n# core:math/big")
 
-	print_bigint :: proc(name: string, a: ^big.Int, base := i8(10), print_name := true, newline := true, print_extra_info := true) {
+	print_bigint :: proc(
+		name: string,
+		a: ^big.Int,
+		base := i8(10),
+		print_name := true,
+		newline := true,
+		print_extra_info := true,
+	) {
 		big.assert_if_nil(a)
 
 		as, err := big.itoa(a, base)
@@ -2275,18 +2363,19 @@ arbitrary_precision_mathematics :: proc() {
 		}
 		fmt.printf(as)
 		if print_extra_info {
-		 	fmt.printf(" (base: %v, bits: %v, digits: %v)", base, cb, a.used)
+			fmt.printf(" (base: %v, bits: %v, digits: %v)", base, cb, a.used)
 		}
 		if newline {
 			fmt.println()
 		}
 	}
 
-	a, b, c, d, e, f, res := &big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}
+	a, b, c, d, e, f, res :=
+		&big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}, &big.Int{}
 	defer big.destroy(a, b, c, d, e, f, res)
 
 	// How many bits should the random prime be?
-	bits   := 64
+	bits := 64
 	// Number of Rabin-Miller trials, -1 for automatic.
 	trials := -1
 
@@ -2298,7 +2387,10 @@ arbitrary_precision_mathematics :: proc() {
 		fmt.printf("Error %v while generating random prime.\n", err)
 	} else {
 		print_bigint("Random Prime A: ", a, 10)
-		fmt.printf("Random number iterations until prime found: %v\n", big.RANDOM_PRIME_ITERATIONS_USED)
+		fmt.printf(
+			"Random number iterations until prime found: %v\n",
+			big.RANDOM_PRIME_ITERATIONS_USED,
+		)
 	}
 
 	// If we want to pack this Int into a buffer of u32, how many do we need?
@@ -2318,8 +2410,12 @@ arbitrary_precision_mathematics :: proc() {
 	defer delete(byte_buf)
 
 	written, err = big.internal_int_pack(a, byte_buf, nails)
-	fmt.printf("\nPacked into buf of 6-bit bytes: %v | err: %v | written: %v\n", byte_buf, err, written)
-
+	fmt.printf(
+		"\nPacked into buf of 6-bit bytes: %v | err: %v | written: %v\n",
+		byte_buf,
+		err,
+		written,
+	)
 
 
 	// Pick another random big Int, not necesssarily prime.
@@ -2343,8 +2439,8 @@ matrix_type :: proc() {
 		m: matrix[2, 3]f32
 
 		m = matrix[2, 3]f32{
-			1, 9, -13,
-			20, 5, -6,
+			1, 9, -13, 
+			20, 5, -6, 
 		}
 
 		// Element types of integers, float, and complex numbers are supported by matrices.
@@ -2368,16 +2464,16 @@ matrix_type :: proc() {
 
 	}
 
-	{ // Matrices support multiplication between matrices
+	{ 	// Matrices support multiplication between matrices
 		a := matrix[2, 3]f32{
-			2, 3, 1,
-			4, 5, 0,
+			2, 3, 1, 
+			4, 5, 0, 
 		}
 
 		b := matrix[3, 2]f32{
-			1, 2,
-			3, 4,
-			5, 6,
+			1, 2, 
+			3, 4, 
+			5, 6, 
 		}
 
 		fmt.println("a", a)
@@ -2388,12 +2484,12 @@ matrix_type :: proc() {
 		fmt.tprintln("c = a * b", c)
 	}
 
-	{ // Matrices support multiplication between matrices and arrays
+	{ 	// Matrices support multiplication between matrices and arrays
 		m := matrix[4, 4]f32{
-			1, 2, 3, 4,
-			5, 5, 4, 2,
-			0, 1, 3, 0,
-			0, 1, 4, 1,
+			1, 2, 3, 4, 
+			5, 5, 4, 2, 
+			0, 1, 3, 0, 
+			0, 1, 4, 1, 
 		}
 
 		v := [4]f32{1, 5, 4, 3}
@@ -2405,9 +2501,9 @@ matrix_type :: proc() {
 		fmt.println("v * m", v * m)
 
 		// Support with non-square matrices
-		s := matrix[2, 4]f32{ // [4][2]f32
-			2, 4, 3, 1,
-			7, 8, 6, 5,
+		s := matrix[2, 4]f32{ 	// [4][2]f32
+			2, 4, 3, 1, 
+			7, 8, 6, 5, 
 		}
 
 		w := [2]f32{1, 2}
@@ -2415,18 +2511,18 @@ matrix_type :: proc() {
 		fmt.println("r", r)
 	}
 
-	{ // Component-wise operations
+	{ 	// Component-wise operations
 		// if the element type supports it
 		// Not support for '/', '%', or '%%' operations
 
 		a := matrix[2, 2]i32{
-			1, 2,
-			3, 4,
+			1, 2, 
+			3, 4, 
 		}
 
 		b := matrix[2, 2]i32{
-			-5,  1,
-			 9, -7,
+			-5, 1, 
+			9, -7, 
 		}
 
 		c0 := a + b
@@ -2441,16 +2537,16 @@ matrix_type :: proc() {
 		c6 := intrinsics.hadamard_product(a, b)
 
 
-		fmt.println("a + b",  c0)
-		fmt.println("a - b",  c1)
-		fmt.println("a & b",  c2)
-		fmt.println("a | b",  c3)
-		fmt.println("a ~ b",  c4)
+		fmt.println("a + b", c0)
+		fmt.println("a - b", c1)
+		fmt.println("a & b", c2)
+		fmt.println("a | b", c3)
+		fmt.println("a ~ b", c4)
 		fmt.println("a &~ b", c5)
 		fmt.println("hadamard_product(a, b)", c6)
 	}
 
-	{ // Submatrix casting square matrices
+	{ 	// Submatrix casting square matrices
 		// Casting a square matrix to another square matrix with same element type
 		// is supported.
 		// If the cast is to a smaller matrix type, the top-left submatrix is taken.
@@ -2461,10 +2557,7 @@ matrix_type :: proc() {
 		mat2 :: distinct matrix[2, 2]f32
 		mat4 :: distinct matrix[4, 4]f32
 
-		m2 := mat2{
-			1, 3,
-			2, 4,
-		}
+		m2 := mat2{1, 3, 2, 4}
 
 		m4 := mat4(m2)
 		assert(m4[2, 2] == 1)
@@ -2474,16 +2567,11 @@ matrix_type :: proc() {
 		fmt.println("mat2(m4)", mat2(m4))
 		assert(mat2(m4) == m2)
 
-		b4 := mat4{
-			1, 2, 0, 0,
-			3, 4, 0, 0,
-			5, 0, 6, 0,
-			0, 7, 0, 8,
-		}
+		b4 := mat4{1, 2, 0, 0, 3, 4, 0, 0, 5, 0, 6, 0, 0, 7, 0, 8}
 		fmt.println("b4", intrinsics.matrix_flatten(b4))
 	}
 
-	{ // Casting non-square matrices
+	{ 	// Casting non-square matrices
 		// Casting a matrix to another matrix is allowed as long as they share
 		// the same element type and the number of elements (rows*columns).
 		// Matrices in Odin are stored in column-major order, which means
@@ -2492,10 +2580,7 @@ matrix_type :: proc() {
 		mat2x4 :: distinct matrix[2, 4]f32
 		mat4x2 :: distinct matrix[4, 2]f32
 
-		x := mat2x4{
-			1, 3, 5, 7,
-			2, 4, 6, 8,
-		}
+		x := mat2x4{1, 3, 5, 7, 2, 4, 6, 8}
 
 		y := mat4x2(x)
 		fmt.println("x", x)
